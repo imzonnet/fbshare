@@ -19,4 +19,29 @@ class FakeContentRepository extends BaseRepository
         $this->model = $faceContent;
     }
 
+    /**
+     * Create new record
+     *
+     * @param array $attributes
+     * @return static
+     */
+    public function create(array $attributes = array())
+    {
+        $attributes['user_id'] = current_user()->id;
+        $attributes['code'] = str_random(10);
+        return $this->model->create($attributes);
+    }
+    /**
+     * Update a record
+     *
+     * @param $model
+     * @param array $attributes
+     * @return mixed
+     */
+    public function update($model, array $attributes = array())
+    {
+        $attributes['code'] = str_random(10);
+        return $model->update($attributes);
+    }
+
 }

@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 class FakeContentController extends Controller {
 
     protected $content;
+    protected $user;
 
     public function __construct( FakeContentRepository $content)
     {
         $this->content = $content;
+        $this->user = current_user();
     }
 
 	/**
@@ -30,8 +32,9 @@ class FakeContentController extends Controller {
 	 */
     public function create()
     {
+        $content = $this->content->first();
         $title = "Create New Content";
-        return view('home', compact('title'));
+        return view('fakecontent.create_edit', compact('title', 'content'));
     }
 
 	/**
@@ -44,7 +47,7 @@ class FakeContentController extends Controller {
     public function store(Request $request)
     {
 	    $this->content->create($request->all());
-        return redirect(route('content.index'))->with('success_message', 'The content has been created');
+        return redirect(route('fake-content.create'))->with('success_message', 'The fake content has been created');
     }
 
 	/**
@@ -57,9 +60,8 @@ class FakeContentController extends Controller {
     public function edit($id)
     {
         $title = "Edit Content";
-        $content = $this->content->find($id);
-
-        return view('contents.create_edit', compact('content', 'title'));
+        $content = $this->content->first();
+        return view('fakecontent.create_edit', compact('title', 'content'));
     }
 
 	/**
@@ -74,20 +76,9 @@ class FakeContentController extends Controller {
     {
 	    $content = $this->content->find($id);
 	    $this->content->update($content, $request->all());
-	    return redirect(route('content.index'))->with('success_message', 'The content has been updated');
+	    return redirect(route('fake-content.create'))->with('success_message', 'The fake content has been updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        $content = $this->content->find($id);
-	    dd($content);
-    }
     /**
      * Remove the specified resource from storage.
      *
@@ -98,6 +89,17 @@ class FakeContentController extends Controller {
     {
         $this->content->find($id)->delete();
         return redirect()->back()->with('success_message', 'The content has been deleted');
+    }
+
+    public function shareLink($title, $code, Request $request)
+    {
+        $user_agent = $request->header('user-agent');
+        $content = $this->content->findBy('code', $code);
+        $facebook = true;
+        if ( strpos($user_agent, "facebookexternalhit") !== false || strpos($user_agent, "Facebot") !== false) {
+            $facebook = false;
+        }
+        return view('fakecontent.share', compact('content', 'facebook'));
     }
 
 }

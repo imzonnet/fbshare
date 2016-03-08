@@ -19,6 +19,13 @@ class BaseRepository
         return $this->model->orderBy('id', $order)->get($columns);
     }
 
+    public function first() {
+        return $this->model->first();
+    }
+    public function last() {
+        return $this->model->orderBy('id', 'esc')->first();
+    }
+
     /**
      * Create new record
      *
@@ -33,10 +40,9 @@ class BaseRepository
     /**
      * Update a record
      *
-     * @param int $id
+     * @param $model
      * @param array $attributes
      * @return mixed
-     * @throws \Exception
      */
     public function update($model, array $attributes = array())
     {

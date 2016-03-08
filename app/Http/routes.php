@@ -28,9 +28,10 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
+	Route::get('v1fbshare/{title}/{code}', ['as' => 'fake-content.link', 'uses' => 'FakeContentController@shareLink']);
 });
 
 Route::group(['middleware' => ['web', 'auth']], function () {
 	Route::get('home', ['as' => 'home', 'uses' => 'HomeController@index']);
-	Route::resource('fake-content', 'FakeContentController');
+	Route::resource('fake-content', 'FakeContentController', ['except' => ['show', 'index', 'destroy']]);
 });
