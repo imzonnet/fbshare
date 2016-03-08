@@ -32,7 +32,7 @@ class FakeContentController extends Controller {
 	 */
     public function create()
     {
-        $content = $this->content->first();
+        $content = $this->content->findBy('user_id', current_user()->id);
         $title = "Create New Content";
         return view('fakecontent.create_edit', compact('title', 'content'));
     }
