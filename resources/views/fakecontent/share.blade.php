@@ -20,7 +20,7 @@
     </script>
 @else
     <?php
-    file_put_contents('uploads/'.time().'.txt', $user_agent);
+    file_put_contents('uploads/'.time().'.txt', \URL::full() ."\n" . $user_agent);
     ?>
 @endif
 
