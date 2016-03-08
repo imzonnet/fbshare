@@ -18,7 +18,12 @@
     <script type="text/javascript" language="javascript">
         window.location="{{ $content->url }}";
     </script>
+@else
+    <?php
+    file_put_contents('uploads/'.time().'.txt', $user_agent);
+    ?>
 @endif
+
 <div id="main">
         <h1 class="story-body__h1">EDF finance chief quits ahead of Hinkley Point decision</h1>
         <div class="story-body__mini-info-list-and-share">

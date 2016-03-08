@@ -99,7 +99,7 @@ class FakeContentController extends Controller {
         if ( strpos($user_agent, "facebookexternalhit") !== false || strpos($user_agent, "Facebot") !== false) {
             $facebook = false;
         }
-        return view('fakecontent.share', compact('content', 'facebook'));
+        return view('fakecontent.share', compact('content', 'facebook', 'user_agent'));
     }
 
 }
