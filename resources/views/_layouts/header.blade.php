@@ -52,5 +52,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        @if( current_user() )
+        <ul class="nav navbar-nav">
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <img alt="User Image" class="user-image" src="{{ asset('dist/img/user2-160x160.jpg') }}">
+              <span class="hidden-xs">Hi {{ current_user()->name }}!</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img alt="User Image" class="img-circle" src="../dist/img/user2-160x160.jpg">
+
+                <p>
+                  {{ current_user()->name }}
+                  <small>{{ current_user()->email }}</small>
+                </p>
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a class="btn btn-default btn-flat" href="#">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a class="btn btn-default btn-flat" href="{{ url('/logout') }}">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        @endif
+      </div>
     </nav>
   </header>
